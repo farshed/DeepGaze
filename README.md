@@ -1,4 +1,4 @@
-# klassi<sup>:fire:</sup>
+# klassi<sup><sub>:fire:</sub></sup>
 
 A new Flutter project.
 
