@@ -1,4 +1,4 @@
-# klassi🔥
+# klassi:fire:
 
 A new Flutter project.
 
