@@ -1,4 +1,4 @@
-package com.example.klassifire
+package com.axiom.deepgaze
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
