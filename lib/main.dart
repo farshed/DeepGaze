@@ -1,29 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'home.dart';
+import 'src/app.dart';
 
-List<CameraDescription> cameras;
+List<CameraDescription> cams;
 
 Future<Null> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    cameras = await availableCameras();
+    cams = await availableCameras();
   } on CameraException catch (e) {
     print('Error: $e.code\nError Message: $e.message');
   }
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'tflite real-time detection',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-      ),
-      home: HomePage(cameras),
-    );
-  }
+  runApp(App(cams));
 }

@@ -44,10 +44,10 @@ flutter:
    #  - images/a_dot_burr.jpeg
    #  - images/a_dot_ham.jpeg
    assets:
-      - assets/yolov2_tiny.tflite
-      - assets/yolov2_tiny.txt
-      - assets/ssd_mobilenet.tflite
-      - assets/ssd_mobilenet.txt
+      - assets/yolo_v2.tflite
+      - assets/yolo_v2.txt
+      - assets/ssd_mobilenet_v1.tflite
+      - assets/ssd_mobilenet_v1.txt
       - assets/ssd_mobilenet_v3.tflite
       - assets/ssd_mobilenet_v3.txt
    # An image asset can refer to one or more resolution-specific "variants", see

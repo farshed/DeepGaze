@@ -5,7 +5,7 @@ import 'dart:math' as math;
 
 import 'camera.dart';
 import 'bndbox.dart';
-import 'models.dart';
+import 'constants.dart';
 
 class HomePage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -32,28 +32,27 @@ class _HomePageState extends State<HomePage> {
     switch (_model) {
       case yolo:
         res = await Tflite.loadModel(
-          model: "assets/yolov2_tiny.tflite",
-          labels: "assets/yolov2_tiny.txt",
+          model: "assets/yolo_v2.tflite",
+          labels: "assets/yolo_v2.txt",
         );
         break;
 
-      case mobilenet:
+      case ssdV1:
         res = await Tflite.loadModel(
-            model: "assets/mobilenet_v1_1.0_224.tflite",
-            labels: "assets/mobilenet_v1_1.0_224.txt");
+            model: "assets/ssd_mobilenet_v1.tflite",
+            labels: "assets/ssd_mobilenet_v1.txt");
         break;
 
-      case posenet:
-        res = await Tflite.loadModel(
-            model: "assets/posenet_mv1_075_float_from_checkpoints.tflite");
+      case ssdV3:
+        res = await Tflite.loadModel(model: "assets/ssd_mobilenet_v3.tflite");
         break;
 
       default:
         res = await Tflite.loadModel(
-            model: "assets/ssd_mobilenet.tflite",
-            labels: "assets/ssd_mobilenet.txt");
+            model: "assets/ssd_mobilenet_v1.tflite",
+            labels: "assets/ssd_mobilenet_v1.txt");
     }
-    print(res);
+    // print(res);
   }
 
   onSelect(model) {
@@ -81,20 +80,16 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   RaisedButton(
-                    child: const Text(ssd),
-                    onPressed: () => onSelect(ssd),
+                    child: const Text(ssdV1),
+                    onPressed: () => onSelect(ssdV1),
+                  ),
+                  RaisedButton(
+                    child: const Text(ssdV3),
+                    onPressed: () => onSelect(ssdV3),
                   ),
                   RaisedButton(
                     child: const Text(yolo),
                     onPressed: () => onSelect(yolo),
-                  ),
-                  RaisedButton(
-                    child: const Text(mobilenet),
-                    onPressed: () => onSelect(mobilenet),
-                  ),
-                  RaisedButton(
-                    child: const Text(posenet),
-                    onPressed: () => onSelect(posenet),
                   ),
                 ],
               ),
