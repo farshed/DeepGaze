@@ -48,8 +48,7 @@ flutter:
       - assets/yolo_v2.txt
       - assets/ssd_mobilenet_v1.tflite
       - assets/ssd_mobilenet_v1.txt
-      - assets/ssd_mobilenet_v3.tflite
-      - assets/ssd_mobilenet_v3.txt
+      - assets/deeplab_v3.tflite
    # An image asset can refer to one or more resolution-specific "variants", see
    # https://flutter.dev/assets-and-images/#resolution-aware.
    # For details regarding adding assets from package dependencies, see
