@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'constants.dart';
 
-class BndBox extends StatelessWidget {
+class Rect extends StatelessWidget {
   final List<dynamic> results;
   final int previewH;
   final int previewW;
@@ -10,7 +10,7 @@ class BndBox extends StatelessWidget {
   final double screenW;
   final String model;
 
-  BndBox(this.results, this.previewH, this.previewW, this.screenH, this.screenW,
+  Rect(this.results, this.previewH, this.previewW, this.screenH, this.screenW,
       this.model);
 
   @override

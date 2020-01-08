@@ -4,7 +4,7 @@ import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 
 import 'camera.dart';
-import 'bndbox.dart';
+import 'Rect.dart';
 import 'constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,14 +37,14 @@ class _HomePageState extends State<HomePage> {
         );
         break;
 
-      case ssdV1:
+      case ssd:
         res = await Tflite.loadModel(
             model: "assets/ssd_mobilenet_v1.tflite",
             labels: "assets/ssd_mobilenet_v1.txt");
         break;
 
-      case ssdV3:
-        res = await Tflite.loadModel(model: "assets/ssd_mobilenet_v3.tflite");
+      case deeplab:
+        res = await Tflite.loadModel(model: "assets/deeplab_v3.tflite");
         break;
 
       default:
@@ -70,46 +70,54 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  onBackPress() {
+    this.setState(() {
+      _model = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
     return Scaffold(
-      body: _model == ""
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    child: const Text(ssdV1),
-                    onPressed: () => onSelect(ssdV1),
-                  ),
-                  RaisedButton(
-                    child: const Text(ssdV3),
-                    onPressed: () => onSelect(ssdV3),
-                  ),
-                  RaisedButton(
-                    child: const Text(yolo),
-                    onPressed: () => onSelect(yolo),
-                  ),
-                ],
-              ),
-            )
-          : Stack(
-              children: [
-                Camera(
-                  widget.cameras,
-                  _model,
-                  setRecognitions,
+        body: _model == ""
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RaisedButton(
+                      child: const Text(ssd),
+                      onPressed: () => onSelect(ssd),
+                    ),
+                    RaisedButton(
+                      child: const Text(yolo),
+                      onPressed: () => onSelect(yolo),
+                    ),
+                    RaisedButton(
+                      child: const Text(deeplab),
+                      onPressed: () => onSelect(deeplab),
+                    ),
+                  ],
                 ),
-                BndBox(
-                    _recognitions == null ? [] : _recognitions,
-                    math.max(_imageHeight, _imageWidth),
-                    math.min(_imageHeight, _imageWidth),
-                    screen.height,
-                    screen.width,
-                    _model),
-              ],
-            ),
-    );
+              )
+            : WillPopScope(
+                child: Stack(
+                  children: [
+                    Camera(
+                      widget.cameras,
+                      _model,
+                      setRecognitions,
+                    ),
+                    Rect(
+                        _recognitions == null ? [] : _recognitions,
+                        math.max(_imageHeight, _imageWidth),
+                        math.min(_imageHeight, _imageWidth),
+                        screen.height,
+                        screen.width,
+                        _model),
+                  ],
+                ),
+                onWillPop: onBackPress,
+              ));
   }
 }
