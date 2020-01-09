@@ -43,7 +43,7 @@ class _CameraState extends State<Camera> {
           if (!isDetecting) {
             isDetecting = true;
 
-            int startTime = new DateTime.now().millisecondsSinceEpoch;
+            // int startTime = new DateTime.now().millisecondsSinceEpoch;
 
             // if (widget.model == ssdV1 || widget.model == ssdV3) {
             //   Tflite.runModelOnFrame(
@@ -74,8 +74,8 @@ class _CameraState extends State<Camera> {
               numResultsPerClass: 1,
               threshold: widget.model == yolo ? 0.2 : 0.4,
             ).then((recognitions) {
-              int endTime = new DateTime.now().millisecondsSinceEpoch;
-              print("Detection took ${endTime - startTime}");
+              // int endTime = new DateTime.now().millisecondsSinceEpoch;
+              // print("Detection took ${endTime - startTime}");
 
               widget.setRecognitions(recognitions, img.height, img.width);
 

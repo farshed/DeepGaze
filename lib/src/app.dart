@@ -7,26 +7,10 @@ class App extends StatelessWidget {
 
   App(this.cameras);
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     title: 'tflite real-time detection',
-  //     theme: ThemeData(
-  //       brightness: Brightness.dark,
-  //     ),
-  //     home: HomePage(cameras),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('DeepGaze'),
-        ),
-        body: HomePage(cameras),
-      ),
+      home: HomePage(cameras),
     );
   }
 }

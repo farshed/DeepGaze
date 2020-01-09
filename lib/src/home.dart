@@ -28,31 +28,29 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadModel() async {
-    String res;
     switch (_model) {
       case yolo:
-        res = await Tflite.loadModel(
+        await Tflite.loadModel(
           model: "assets/yolo_v2.tflite",
           labels: "assets/yolo_v2.txt",
         );
         break;
 
       case ssd:
-        res = await Tflite.loadModel(
+        await Tflite.loadModel(
             model: "assets/ssd_mobilenet_v1.tflite",
             labels: "assets/ssd_mobilenet_v1.txt");
         break;
 
       case deeplab:
-        res = await Tflite.loadModel(model: "assets/deeplab_v3.tflite");
+        await Tflite.loadModel(model: "assets/deeplab_v3.tflite");
         break;
 
       default:
-        res = await Tflite.loadModel(
+        await Tflite.loadModel(
             model: "assets/ssd_mobilenet_v1.tflite",
             labels: "assets/ssd_mobilenet_v1.txt");
     }
-    // print(res);
   }
 
   onSelect(model) {
@@ -70,54 +68,60 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  onBackPress() {
-    this.setState(() {
+  Future<bool> onBackPress() {
+    setState(() {
       _model = "";
     });
+    return Future.value(false);
   }
 
   @override
   Widget build(BuildContext context) {
     Size screen = MediaQuery.of(context).size;
-    return Scaffold(
-        body: _model == ""
-            ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    RaisedButton(
-                      child: const Text(ssd),
-                      onPressed: () => onSelect(ssd),
-                    ),
-                    RaisedButton(
-                      child: const Text(yolo),
-                      onPressed: () => onSelect(yolo),
-                    ),
-                    RaisedButton(
-                      child: const Text(deeplab),
-                      onPressed: () => onSelect(deeplab),
-                    ),
-                  ],
+    return _model == ""
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text('DeepGaze'),
+              backgroundColor: Colors.indigo[500],
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    child: const Text(ssd),
+                    onPressed: () => onSelect(ssd),
+                  ),
+                  RaisedButton(
+                    child: const Text(yolo),
+                    onPressed: () => onSelect(yolo),
+                  ),
+                  RaisedButton(
+                    child: const Text(deeplab),
+                    onPressed: () => onSelect(deeplab),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : WillPopScope(
+            onWillPop: onBackPress,
+            child: Stack(
+              children: [
+                Camera(
+                  widget.cameras,
+                  _model,
+                  setRecognitions,
                 ),
-              )
-            : WillPopScope(
-                child: Stack(
-                  children: [
-                    Camera(
-                      widget.cameras,
-                      _model,
-                      setRecognitions,
-                    ),
-                    Rect(
-                        _recognitions == null ? [] : _recognitions,
-                        math.max(_imageHeight, _imageWidth),
-                        math.min(_imageHeight, _imageWidth),
-                        screen.height,
-                        screen.width,
-                        _model),
-                  ],
-                ),
-                onWillPop: onBackPress,
-              ));
+                Rect(
+                    _recognitions == null ? [] : _recognitions,
+                    math.max(_imageHeight, _imageWidth),
+                    math.min(_imageHeight, _imageWidth),
+                    screen.height,
+                    screen.width,
+                    _model),
+              ],
+            ),
+          );
   }
 }
