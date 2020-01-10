@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class Rect extends StatelessWidget {
+class BoundingRect extends StatelessWidget {
   final List<dynamic> results;
-  final int previewH;
-  final int previewW;
-  final double screenH;
-  final double screenW;
+  final int previewHeight;
+  final int previewWidth;
+  final double screenHeight;
+  final double screenWidth;
   final String model;
 
-  Rect(this.results, this.previewH, this.previewW, this.screenH, this.screenW,
-      this.model);
+  BoundingRect(this.results, this.previewHeight, this.previewWidth,
+      this.screenHeight, this.screenWidth, this.model);
 
   @override
   Widget build(BuildContext context) {
@@ -20,26 +20,26 @@ class Rect extends StatelessWidget {
       var _w = res["rect"]["w"];
       var _y = res["rect"]["y"];
       var _h = res["rect"]["h"];
-      var scaleW, scaleH, x, y, w, h;
+      var scaleX, scaleY, x, y, w, h;
 
-      if (screenH / screenW > previewH / previewW) {
-        scaleW = screenH / previewH * previewW;
-        scaleH = screenH;
-        var difW = (scaleW - screenW) / scaleW;
-        x = (_x - difW / 2) * scaleW;
-        w = _w * scaleW;
-        if (_x < difW / 2) w -= (difW / 2 - _x) * scaleW;
-        y = _y * scaleH;
-        h = _h * scaleH;
+      if (screenHeight / screenWidth > previewHeight / previewWidth) {
+        scaleX = screenHeight / previewHeight * previewWidth;
+        scaleY = screenHeight;
+        var difW = (scaleX - screenWidth) / scaleX;
+        x = (_x - difW / 2) * scaleX;
+        w = _w * scaleX;
+        if (_x < difW / 2) w -= (difW / 2 - _x) * scaleX;
+        y = _y * scaleY;
+        h = _h * scaleY;
       } else {
-        scaleH = screenW / previewW * previewH;
-        scaleW = screenW;
-        var difH = (scaleH - screenH) / scaleH;
-        x = _x * scaleW;
-        w = _w * scaleW;
-        y = (_y - difH / 2) * scaleH;
-        h = _h * scaleH;
-        if (_y < difH / 2) h -= (difH / 2 - _y) * scaleH;
+        scaleY = screenWidth / previewWidth * previewHeight;
+        scaleX = screenWidth;
+        var difH = (scaleY - screenHeight) / scaleY;
+        x = _x * scaleX;
+        w = _w * scaleX;
+        y = (_y - difH / 2) * scaleY;
+        h = _h * scaleY;
+        if (_y < difH / 2) h -= (difH / 2 - _y) * scaleY;
       }
 
       return Positioned(

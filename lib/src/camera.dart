@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
-import 'dart:math' as math;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:math' as math;
 import 'constants.dart';
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -113,16 +113,18 @@ class CameraState extends State<Camera> {
         children: <Widget>[
           CameraPreview(controller),
           Positioned(
-              right: 100.0,
-              bottom: 100.0,
-              child: GestureDetector(
-                onTap: switchCam,
-                child: Icon(
-                  Icons.sync,
-                  size: 25,
-                  color: Colors.white,
-                ),
+            right: 100.0,
+            bottom: 100.0,
+            height: 35.0,
+            width: 35.0,
+            child: GestureDetector(
+              onTap: switchCam,
+              child: Icon(
+                Icons.sync,
+                size: 35,
+                color: Colors.white,
               ),
+            ),
           ),
         ],
       ),

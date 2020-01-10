@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
-
 import 'camera.dart';
-import 'Rect.dart';
 import 'constants.dart';
+import 'package:deepgaze/src/bounding_rect.dart';
 
 class HomePage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -113,7 +112,7 @@ class HomePageState extends State<HomePage> {
                   _model,
                   setRecognitions,
                 ),
-                Rect(
+                BoundingRect(
                     recognitions == null ? [] : recognitions,
                     math.max(imageHeight, imageWidth),
                     math.min(imageHeight, imageWidth),
