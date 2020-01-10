@@ -122,7 +122,8 @@ class CameraState extends State<Camera> {
                   size: 25,
                   color: Colors.white,
                 ),
-              )),
+              ),
+          ),
         ],
       ),
     );
