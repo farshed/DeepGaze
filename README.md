@@ -18,9 +18,9 @@ flutter packages get
 
 ## Models
 
-1. Object Detection & Classification
+**1. Object Detection & Classification**
 	- SSD MobileNet v1 (Good performance but <sup>:poop:</sup> accuracy)
 	- YOLO v2 (A little heavy on the resources but better accuracy)
 
-2. Image Segmentation
+**2. Image Segmentation**
 	- DeepLab v3
