@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'home.dart';
+import 'homepage.dart';
 
 class App extends StatelessWidget {
-  final List<CameraDescription> cameras;
+  List<CameraDescription> cameras;
 
   App(this.cameras);
 

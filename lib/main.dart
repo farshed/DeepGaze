@@ -1,16 +1,19 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'src/app.dart';
 
-List<CameraDescription> cams;
-
-Future<Null> main() async {
+void main() async {
+  List<CameraDescription> cameras;
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    cams = await availableCameras();
+    cameras = await availableCameras();
   } on CameraException catch (e) {
-    print('Error: $e.code\nError Message: $e.message');
+    Fluttertoast.showToast(
+        msg: "Error $e.code: $e.message",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 16.0);
   }
-  runApp(App(cams));
+  runApp(App(cameras));
 }

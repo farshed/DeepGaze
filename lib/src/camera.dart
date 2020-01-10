@@ -2,35 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'constants.dart';
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
-  final List<CameraDescription> cameras;
+  List<CameraDescription> cameras;
   final Callback setRecognitions;
   final String model;
 
   Camera(this.cameras, this.model, this.setRecognitions);
 
   @override
-  _CameraState createState() => new _CameraState();
+  CameraState createState() => new CameraState();
 }
 
-class _CameraState extends State<Camera> {
+class CameraState extends State<Camera> {
   CameraController controller;
   bool isDetecting = false;
+  int camIndex = 0;
 
   @override
   void initState() {
     super.initState();
 
     if (widget.cameras == null || widget.cameras.length < 1) {
-      print('No camera is found');
+      Fluttertoast.showToast(
+          msg: "No cameras found",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0);
     } else {
       controller = new CameraController(
-        widget.cameras[0],
+        widget.cameras[camIndex],
         ResolutionPreset.medium,
       );
       controller.initialize().then((_) {
@@ -43,25 +48,6 @@ class _CameraState extends State<Camera> {
           if (!isDetecting) {
             isDetecting = true;
 
-            // int startTime = new DateTime.now().millisecondsSinceEpoch;
-
-            // if (widget.model == ssdV1 || widget.model == ssdV3) {
-            //   Tflite.runModelOnFrame(
-            //     bytesList: img.planes.map((plane) {
-            //       return plane.bytes;
-            //     }).toList(),
-            //     imageHeight: img.height,
-            //     imageWidth: img.width,
-            //     numResults: 2,
-            //   ).then((recognitions) {
-            //     int endTime = new DateTime.now().millisecondsSinceEpoch;
-            //     print("Detection took ${endTime - startTime}");
-
-            //     widget.setRecognitions(recognitions, img.height, img.width);
-
-            //     isDetecting = false;
-            //   });
-            // } else {
             Tflite.detectObjectOnFrame(
               bytesList: img.planes.map((plane) {
                 return plane.bytes;
@@ -74,17 +60,26 @@ class _CameraState extends State<Camera> {
               numResultsPerClass: 1,
               threshold: widget.model == yolo ? 0.2 : 0.4,
             ).then((recognitions) {
-              // int endTime = new DateTime.now().millisecondsSinceEpoch;
-              // print("Detection took ${endTime - startTime}");
-
               widget.setRecognitions(recognitions, img.height, img.width);
-
               isDetecting = false;
             });
-            // }
           }
         });
       });
+    }
+  }
+
+  void switchCam() {
+    if (widget.cameras.length > 1) {
+      setState(() {
+        camIndex = camIndex == 0 ? 1 : 0;
+      });
+    } else {
+      Fluttertoast.showToast(
+          msg: "No other cameras available",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 16.0);
     }
   }
 
@@ -114,7 +109,22 @@ class _CameraState extends State<Camera> {
           screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
       maxWidth:
           screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
-      child: CameraPreview(controller),
+      child: Stack(
+        children: <Widget>[
+          CameraPreview(controller),
+          Positioned(
+              right: 100.0,
+              bottom: 100.0,
+              child: GestureDetector(
+                onTap: switchCam,
+                child: Icon(
+                  Icons.sync,
+                  size: 25,
+                  color: Colors.white,
+                ),
+              )),
+        ],
+      ),
     );
   }
 }

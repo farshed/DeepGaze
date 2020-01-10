@@ -13,13 +13,13 @@ class HomePage extends StatefulWidget {
   HomePage(this.cameras);
 
   @override
-  _HomePageState createState() => new _HomePageState();
+  HomePageState createState() => new HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List<dynamic> _recognitions;
-  int _imageHeight = 0;
-  int _imageWidth = 0;
+class HomePageState extends State<HomePage> {
+  List<dynamic> recognitions;
+  int imageHeight = 0;
+  int imageWidth = 0;
   String _model = "";
 
   @override
@@ -60,11 +60,11 @@ class _HomePageState extends State<HomePage> {
     loadModel();
   }
 
-  setRecognitions(recognitions, imageHeight, imageWidth) {
+  setRecognitions(recogs, imgHeight, imgWidth) {
     setState(() {
-      _recognitions = recognitions;
-      _imageHeight = imageHeight;
-      _imageWidth = imageWidth;
+      recognitions = recogs;
+      imageHeight = imgHeight;
+      imageWidth = imgWidth;
     });
   }
 
@@ -114,9 +114,9 @@ class _HomePageState extends State<HomePage> {
                   setRecognitions,
                 ),
                 Rect(
-                    _recognitions == null ? [] : _recognitions,
-                    math.max(_imageHeight, _imageWidth),
-                    math.min(_imageHeight, _imageWidth),
+                    recognitions == null ? [] : recognitions,
+                    math.max(imageHeight, imageWidth),
+                    math.min(imageHeight, imageWidth),
                     screen.height,
                     screen.width,
                     _model),

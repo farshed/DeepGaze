@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'constants.dart';
 
 class Rect extends StatelessWidget {
   final List<dynamic> results;
@@ -61,7 +60,7 @@ class Rect extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,
-                backgroundColor: Color.fromRGBO(4, 64, 223, 1.0),
+                backgroundColor: Color.fromRGBO(4, 64, 223, 0.9),
                 decoration: TextDecoration.none),
           ),
         ),
