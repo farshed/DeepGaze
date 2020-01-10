@@ -2,16 +2,25 @@
 
 An experiment in real-time object detection & classification with Flutter and Tensorflow
 
-### A little background
+## A little background
 
-I decided to do this as a joint semester project for my Mobile Computing (CS-471) and Artificial Intelligence (CS-632) courses. I was originally planning on using React Native but react-native-camera doesn't expose a way to recieve the camera feed in real-time because apparently, it locks up the bridge (see [#135](https://github.com/react-native-community/react-native-camera/issues/135#issuecomment-165710613))
-This project is a starting point for a Flutter application.
+I decided to do this as a joint semester project for my _Mobile Computing (CS-471)_ and _Artificial Intelligence (CS-632)_ courses. I was originally planning on using React Native but react-native-camera doesn't expose a way to recieve the camera feed in real-time because apparently, it locks up the bridge (see [#135](https://github.com/react-native-community/react-native-camera/issues/135#issuecomment-165710613))
+<br>
+Fortunately, I found this [article](https://blog.usejournal.com/real-time-object-detection-in-flutter-b31c7ff9ef96) by [Sha Qian](https://github.com/shaqian), which meant this was possible to achieve with Flutter.
 
-A few resources to get you started if this is your first Flutter project:
+## Install
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Clone repo & run
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+flutter packages get
+```
+
+## Models
+
+1. Object Detection & Classification
+	- SSD MobileNet v1 (Good performance but 💩 accuracy)
+	- YOLO v2 (A little heavy on the resources but better accuracy)
+	
+2. Image Segmentation
+	- DeepLab v3
