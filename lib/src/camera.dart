@@ -9,13 +9,13 @@ typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
   List<CameraDescription> cameras;
-  final Callback setRecognitions;
+  final Callback setRecogs;
   final String model;
 
-  Camera(this.cameras, this.model, this.setRecognitions);
+  Camera(this.cameras, this.model, this.setRecogs);
 
   @override
-  CameraState createState() => new CameraState();
+  CameraState createState() => CameraState();
 }
 
 class CameraState extends State<Camera> {
@@ -26,7 +26,10 @@ class CameraState extends State<Camera> {
   @override
   void initState() {
     super.initState();
+    setupCam();
+  }
 
+  void setupCam() {
     if (widget.cameras == null || widget.cameras.length < 1) {
       Fluttertoast.showToast(
           msg: "No cameras found",
@@ -38,11 +41,12 @@ class CameraState extends State<Camera> {
         widget.cameras[camIndex],
         ResolutionPreset.medium,
       );
-      controller.initialize().then((_) {
-        if (!mounted) {
+      controller.initialize().then((val) {
+        if (mounted) {
+          setState(() {});
+        } else {
           return;
         }
-        setState(() {});
 
         controller.startImageStream((CameraImage img) {
           if (!isDetecting) {
@@ -58,9 +62,9 @@ class CameraState extends State<Camera> {
               imageMean: widget.model == yolo ? 0 : 127.5,
               imageStd: widget.model == yolo ? 255.0 : 127.5,
               numResultsPerClass: 1,
-              threshold: widget.model == yolo ? 0.2 : 0.4,
+              threshold: widget.model == yolo ? 0.2 : 0.5,
             ).then((recognitions) {
-              widget.setRecognitions(recognitions, img.height, img.width);
+              widget.setRecogs(recognitions, img.height, img.width);
               isDetecting = false;
             });
           }
@@ -74,6 +78,7 @@ class CameraState extends State<Camera> {
       setState(() {
         camIndex = camIndex == 0 ? 1 : 0;
       });
+      setupCam();
     } else {
       Fluttertoast.showToast(
           msg: "No other cameras available",
@@ -113,10 +118,8 @@ class CameraState extends State<Camera> {
         children: <Widget>[
           CameraPreview(controller),
           Positioned(
-            right: 100.0,
-            bottom: 100.0,
-            height: 35.0,
-            width: 35.0,
+            right: 130.0,
+            bottom: 25.0,
             child: GestureDetector(
               onTap: switchCam,
               child: Icon(

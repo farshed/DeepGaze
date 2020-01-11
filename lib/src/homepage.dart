@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
   HomePage(this.cameras);
 
   @override
-  HomePageState createState() => new HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
@@ -95,10 +95,10 @@ class HomePageState extends State<HomePage> {
                     child: const Text(yolo),
                     onPressed: () => onSelect(yolo),
                   ),
-                  RaisedButton(
-                    child: const Text(deeplab),
-                    onPressed: () => onSelect(deeplab),
-                  ),
+                  // RaisedButton(
+                  //   child: const Text(deeplab),
+                  //   onPressed: () => onSelect(deeplab),
+                  // ),
                 ],
               ),
             ),
