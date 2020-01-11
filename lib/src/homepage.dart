@@ -4,6 +4,7 @@ import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 import 'camera.dart';
 import 'constants.dart';
+import 'cards_list.dart';
 import 'package:deepgaze/src/bounding_rect.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,25 +31,25 @@ class HomePageState extends State<HomePage> {
     switch (_model) {
       case yolo:
         await Tflite.loadModel(
-          model: "assets/yolo_v2.tflite",
-          labels: "assets/yolo_v2.txt",
+          model: "assets/models/yolo_v2.tflite",
+          labels: "assets/models/yolo_v2.txt",
         );
         break;
 
       case ssd:
         await Tflite.loadModel(
-            model: "assets/ssd_mobilenet_v1.tflite",
-            labels: "assets/ssd_mobilenet_v1.txt");
+            model: "assets/models/ssd_mobilenet_v1.tflite",
+            labels: "assets/models/ssd_mobilenet_v1.txt");
         break;
 
-      case deeplab:
-        await Tflite.loadModel(model: "assets/deeplab_v3.tflite");
-        break;
+      // case deeplab:
+      //   await Tflite.loadModel(model: "assets/deeplab_v3.tflite");
+      //   break;
 
       default:
         await Tflite.loadModel(
-            model: "assets/ssd_mobilenet_v1.tflite",
-            labels: "assets/ssd_mobilenet_v1.txt");
+            model: "assets/models/ssd_mobilenet_v1.tflite",
+            labels: "assets/models/ssd_mobilenet_v1.txt");
     }
   }
 
@@ -81,27 +82,28 @@ class HomePageState extends State<HomePage> {
         ? Scaffold(
             appBar: AppBar(
               title: const Text('DeepGaze'),
-              backgroundColor: Colors.indigo[500],
+              backgroundColor: Colors.blue[700],
             ),
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    child: const Text(ssd),
-                    onPressed: () => onSelect(ssd),
-                  ),
-                  RaisedButton(
-                    child: const Text(yolo),
-                    onPressed: () => onSelect(yolo),
-                  ),
-                  // RaisedButton(
-                  //   child: const Text(deeplab),
-                  //   onPressed: () => onSelect(deeplab),
-                  // ),
-                ],
-              ),
-            ),
+            body: CardList(onSelect),
+            // body: Center(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       RaisedButton(
+            //         child: const Text(ssd),
+            //         onPressed: () => onSelect(ssd),
+            //       ),
+            //       RaisedButton(
+            //         child: const Text(yolo),
+            //         onPressed: () => onSelect(yolo),
+            //       ),
+            //       RaisedButton(
+            //         child: const Text(deeplab),
+            //         onPressed: () => onSelect(deeplab),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           )
         : WillPopScope(
             onWillPop: onBackPress,

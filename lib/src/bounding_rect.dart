@@ -50,7 +50,7 @@ class BoundingRect extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: Color.fromRGBO(4, 64, 223, 1.0),
+              color: Colors.blue[900],
               width: 3.0,
             ),
           ),
@@ -60,7 +60,7 @@ class BoundingRect extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,
-                backgroundColor: Color.fromRGBO(4, 64, 223, 0.9),
+                backgroundColor: Colors.blue[900].withOpacity(0.9),
                 decoration: TextDecoration.none),
           ),
         ),

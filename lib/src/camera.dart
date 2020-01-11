@@ -8,7 +8,7 @@ import 'constants.dart';
 typedef void Callback(List<dynamic> list, int h, int w);
 
 class Camera extends StatefulWidget {
-  List<CameraDescription> cameras;
+  final List<CameraDescription> cameras;
   final Callback setRecogs;
   final String model;
 
@@ -62,7 +62,7 @@ class CameraState extends State<Camera> {
               imageMean: widget.model == yolo ? 0 : 127.5,
               imageStd: widget.model == yolo ? 255.0 : 127.5,
               numResultsPerClass: 1,
-              threshold: widget.model == yolo ? 0.2 : 0.5,
+              threshold: widget.model == yolo ? 0.25 : 0.4,
             ).then((recognitions) {
               widget.setRecogs(recognitions, img.height, img.width);
               isDetecting = false;
@@ -108,17 +108,17 @@ class CameraState extends State<Camera> {
     var previewW = math.min(tmp.height, tmp.width);
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
-
+    var finalWidth =
+        screenRatio > previewRatio ? screenH / previewH * previewW : screenW;
     return OverflowBox(
       maxHeight:
           screenRatio > previewRatio ? screenH : screenW / previewW * previewH,
-      maxWidth:
-          screenRatio > previewRatio ? screenH / previewH * previewW : screenW,
+      maxWidth: finalWidth,
       child: Stack(
         children: <Widget>[
           CameraPreview(controller),
           Positioned(
-            right: 130.0,
+            right: ((finalWidth - screenW) / 2) + 25.0,
             bottom: 25.0,
             child: GestureDetector(
               onTap: switchCam,
