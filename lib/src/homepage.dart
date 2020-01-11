@@ -85,25 +85,6 @@ class HomePageState extends State<HomePage> {
               backgroundColor: Colors.blue[700],
             ),
             body: CardList(onSelect),
-            // body: Center(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            //       RaisedButton(
-            //         child: const Text(ssd),
-            //         onPressed: () => onSelect(ssd),
-            //       ),
-            //       RaisedButton(
-            //         child: const Text(yolo),
-            //         onPressed: () => onSelect(yolo),
-            //       ),
-            //       RaisedButton(
-            //         child: const Text(deeplab),
-            //         onPressed: () => onSelect(deeplab),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           )
         : WillPopScope(
             onWillPop: onBackPress,
