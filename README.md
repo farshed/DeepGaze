@@ -24,3 +24,8 @@ flutter packages get
 
 2. __Image Segmentation__
 	- _DeepLab v3_
+
+## Todo
+
+- [x] Allow user to switch between cameras
+- [ ] Add real-time segmentation
