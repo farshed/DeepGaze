@@ -18,14 +18,13 @@ flutter packages get
 
 ## Models
 
-1. __Object Detection & Classification__
-	- _SSD MobileNet v1_ (Good performance but <sup>:poop:</sup> accuracy)
-	- _YOLO v2_ (A little heavy on the resources but better accuracy)
+1. **Object Detection & Classification**
+   -  _SSD MobileNet v1_ (Good performance but <sup>:poop:</sup> accuracy)
+   -  _YOLO v2_ (A little heavy on the resources but better accuracy)
 
-2. __Image Segmentation__
-	- _DeepLab v3_
+[//]: <> (2. **Image Segmentation**- _DeepLab v3_)
 
 ## Todo
 
-- [x] Allow user to switch between cameras
-- [ ] Add real-time segmentation
+-  [x] Allow users to switch between cameras
+-  [ ] Add support for real-time segmentation
